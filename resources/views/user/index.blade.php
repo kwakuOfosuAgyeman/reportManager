@@ -65,7 +65,7 @@
                 <div class="col-6 col-md-4 col-xl-2">
                     <div class="card">
                         <div class="card-body">
-                            <a href="hr-report.html" class="my_sort_cut text-muted">
+                            <a href="{{asset('user.report')}}" class="my_sort_cut text-muted">
                                 <i class="icon-pie-chart"></i>
                                 <span>Report</span>
                             </a>

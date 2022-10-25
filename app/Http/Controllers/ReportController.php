@@ -12,9 +12,12 @@ class ReportController extends Controller
     {
         $data = Reports::all();
 
-        return response()->json([
-            'success' => true,
-            'data' => $data
+        // return response()->json([
+        //     'success' => true,
+        //     'data' => $data
+        // ]);
+        return view('user.reports', [
+            'data' => $data,
         ]);
     }
 
