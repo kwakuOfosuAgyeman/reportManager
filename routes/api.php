@@ -24,4 +24,5 @@ Route::group(['prefix' => 'report'], function () {
     Route::get('/index', [ReportController::class, 'getAllReports']);
     Route::get('/show', [ReportController::class, 'getReportById']);
     Route::put('/update', [ReportController::class, 'updateReport']);
+    Route::delete('/delete', [ReportController::class, 'deleteReport']);
 });

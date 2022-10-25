@@ -82,4 +82,25 @@ class ReportController extends Controller
         ]);
 
     }
+
+    public function deleteReport(Request $request)
+    {
+        $data = $request->validate([
+            'id' => 'required'
+        ]);
+
+        $report = Reports::find($data['id']);
+
+        if($report && $report->delete()){
+            return response()->json([
+                'success' => true,
+                'message' => 'Record deleted'
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'error_message' => 'Record not deleted'
+            ]);
+        }
+    }
 }
