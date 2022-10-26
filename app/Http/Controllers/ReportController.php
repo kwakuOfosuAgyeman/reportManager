@@ -8,33 +8,49 @@ use Illuminate\Http\Request;
 class ReportController extends Controller
 {
     //
-    public function getAllReports()
+    public function index()
     {
         $data = Reports::all();
 
-        // return response()->json([
-        //     'success' => true,
-        //     'data' => $data
-        // ]);
         return view('user.reports', [
             'data' => $data,
         ]);
     }
 
-    public function addReport(Request $request)
+    public function create()
     {
-        $data = $request->validate([
+        return view('user.addReport');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
             'report_title' => 'required',
             'description' => 'required',
             'file_name' => 'required',
             'location' => 'required'
         ]);
 
-        $report = Reports::create($data);
+        Reports::create([
+            'report_title' => $request->report_title,
+            'description' => $request->description,
+            'file_name' => $request->file_name,
+            'location' => $request->location
+        ]);
 
-        return response()->json([
-            'success' => true,
-            'data' => $report
+        return redirect()->route('user.reports')
+                        ->with("Success", "Report created successfully");
+        
+    }
+
+    public function show(Request $request)
+    {
+        $data = $request->validate([
+            'id' => 'required'
+        ]);
+
+        return view('user.getReport', [
+            'data' => $data,
         ]);
     }
 
@@ -59,9 +75,15 @@ class ReportController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        $report = Reports::where('id', $id)->first();
+        return view('user.editReport', compact('report'));
+    }
+
     public function updateReport(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'id' => 'required',
             'report_title' => 'required',
             'description' => 'required',
@@ -69,20 +91,23 @@ class ReportController extends Controller
             'location' => 'required'
         ]);
 
-        $report = Reports::find($data['id']);
+        $report = Reports::where('id', $request['id'])->first();
 
         if($report){
-            $report['report_title'] = $data['report_title'];
-            $report['description'] = $data['description'];
-            $report['file_name'] = $data['file_name'];
-            $report['location'] = $data['location'];
-            $report->save();
+            /* $report['report_title'] = $request['report_title'];
+            $report['description'] = $request['description'];
+            $report['file_name'] = $request['file_name'];
+            $report['location'] = $request['location'];
+            $report->save(); */
+
+            return redirect()->route('user.index')
+                        ->with('success','Report updated successfully');
+        }else{
+            return redirect()->route('user.addReport')
+                        ->with('failed','Report updated unsuccessfully');
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $report
-        ]);
+        
 
     }
 

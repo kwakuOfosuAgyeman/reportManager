@@ -41,7 +41,12 @@ Route::prefix('user')->name('user.')->group(function () {
 
     Route::middleware(['auth:web'])->group(function () {
         Route::get('/home', [UserController::class, 'index'])->name('home');
-        Route::get('/reports', [ReportController::class, 'getAllReports'])->name('reports');
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+        Route::get('/addReport', [ReportController::class, 'create'])->name('addReport');
+        Route::post('/addReport', [ReportController::class, 'store']);
+        Route::get('/editReport/{id}', [ReportController::class, 'edit'])->name('editReport');
+        Route::put('/editReport', [ReportController::class, 'updateReport'])->name('updateReport');
+
     });
 });
 
