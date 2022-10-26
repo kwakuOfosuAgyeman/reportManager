@@ -17,15 +17,15 @@
                           </div>
                           <div class="card-body">
                               <div class="table-responsive">
-                                   <form action="{{ route('user.updateReport', $report->id) }}" id="basic-form" method="post" novalidate>
+                                   <form action="{{ route('user.updateReport') }}" id="basic-form" method="post" novalidate>
                                         @csrf
                                         @method('PUT')
-
+                                        <input type="hidden" name="id" value="{{$report->id}}">
                                         <div class="form-group">
                                             <label>Report title</label>
                                             <input type="text" name="report_title" value="{{ $report->report_title }}" class="form-control" required>
                                         </div>
-                                   
+
                                         <div class="form-group">
                                             <label>Description</label>
                                             <textarea class="form-control" name="description" rows="5" cols="30" required>{{ $report->description }}</textarea>
@@ -39,7 +39,7 @@
                                             <label>File location</label>
                                             <input type="text" name="location" value="{{ $report->location }}" class="form-control" required>
                                         </div>
-                                       
+
                                         <br>
                                         <button type="submit" class="btn btn-primary">Update</button>
                                     </form>
@@ -48,11 +48,11 @@
                       </div>
                   </div>
               </div>
-  
+
           </div>
-  
+
      </div>
-  
+
      @section('page-script')
      <script src="{{ asset('assets/bundles/apexcharts.bundle.js') }}"></script>
      <script src="{{ asset('assets/bundles/counterup.bundle.js') }}"></script>

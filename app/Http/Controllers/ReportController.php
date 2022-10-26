@@ -40,7 +40,7 @@ class ReportController extends Controller
 
         return redirect()->route('user.reports')
                         ->with("Success", "Report created successfully");
-        
+
     }
 
     public function show(Request $request)
@@ -83,49 +83,41 @@ class ReportController extends Controller
 
     public function updateReport(Request $request)
     {
-        $request->validate([
+        $updateData = $request->validate([
             'id' => 'required',
-            'report_title' => 'required',
+            'report_title' => 'required|min:3',
             'description' => 'required',
-            'file_name' => 'required',
+            'file_name' => 'required|min:3',
             'location' => 'required'
         ]);
 
-        $report = Reports::where('id', $request['id'])->first();
+        $report = Reports::where('id', $request->id)->first();
 
-        if($report){
-            /* $report['report_title'] = $request['report_title'];
-            $report['description'] = $request['description'];
-            $report['file_name'] = $request['file_name'];
-            $report['location'] = $request['location'];
-            $report->save(); */
-
-            return redirect()->route('user.index')
+        if(isset($report)){
+            Reports::where('id', $request->id)->update($updateData);
+            return redirect()->route('user.reports')
                         ->with('success','Report updated successfully');
         }else{
             return redirect()->route('user.addReport')
-                        ->with('failed','Report updated unsuccessfully');
+                        ->with('failed','Report does not exist');
         }
 
-        
+
 
     }
 
     public function deleteReport(Request $request)
     {
+        //dd($request->input('id'));
         $data = $request->validate([
             'id' => 'required'
         ]);
 
-        $report = Reports::find($data['id']);
 
-        if($report && $report->delete()){
-            return response()->json([
-                'success' => true,
-                'message' => 'Record deleted'
-            ]);
+        if(Reports::destroy($data['id'])){
+            return back();
         }else{
-            return response()->json([
+            return back()->withErrors([
                 'success' => false,
                 'error_message' => 'Record not deleted'
             ]);

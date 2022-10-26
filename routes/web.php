@@ -46,6 +46,7 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::post('/addReport', [ReportController::class, 'store']);
         Route::get('/editReport/{id}', [ReportController::class, 'edit'])->name('editReport');
         Route::put('/editReport', [ReportController::class, 'updateReport'])->name('updateReport');
+        Route::delete('/deleteReport', [ReportController::class, 'deleteReport'])->name('deleteReport');
 
     });
 });

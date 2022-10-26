@@ -14,7 +14,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Report Table</h3>
+                            <a class="card-title align-right" href="{{route('user.addReport')}}" class="btn btn-primary">Add Report</a>
                         </div>
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-hover table-striped text-nowrap table-vcenter mb-0">
@@ -37,8 +39,8 @@
                                             <td>{{$item->description}}</td>
                                             <td>{{$item->file_name}}</td>
                                             <td>{{$item->location}}</td>
-                                            <td><small><a href="{{ route('user.editReport',['id' => $item->id]) }}">Edit <i class="fe fe-edit" data-toggle="tooltip" title="fe fe-edit"></i></a></small></td>
-                                            <td><small><a href="#">Delete <i class="fe fe-trash" data-toggle="tooltip" title="fe fe-trash"></i></a></small></td>
+                                            <td><small><a href="{{ route('user.editReport',['id' => $item->id]) }}"> Edit <i class="fe fe-edit" data-toggle="tooltip" title="fe fe-edit"></i></a></small></td>
+                                            <td><small><form action="{{route('user.deleteReport')}}" method="post"> @csrf @method('DELETE') <input type="hidden" name="id" value="{{$item->id}}"> <button type="submit" style="background: none; border: none;"> Delete <i class="fe fe-trash" data-toggle="tooltip" title="fe fe-trash"></i></button> </form> </small></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
