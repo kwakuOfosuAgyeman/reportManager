@@ -123,4 +123,10 @@ class ReportController extends Controller
             ]);
         }
     }
+
+    public function runReport($id)
+    {
+        $report = Reports::where('id', $id)->first();
+        return view('user.runReport', compact('report'));
+    }
 }

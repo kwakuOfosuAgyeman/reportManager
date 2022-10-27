@@ -12,9 +12,9 @@
             <div class="row clearfix">
                 <div class="col-12 col-sm-12">
                     <div class="card">
-                        <div class="card-header" style="justify-content: space-between">
+                        <div class="card-header">
                             <h3 class="card-title">Report Table</h3>
-                            <a class="card-title" href="{{route('user.addReport')}}" class="btn btn-primary">Add Report</a>
+                            {{-- <a class="card-title" href="{{route('user.addReport')}}" class="btn btn-primary">Add Report</a> --}}
                         </div>
 
                         <div class="card-body"> 
@@ -27,25 +27,16 @@
                                             <th>Description</th>
                                             <th>File name</th>
                                             <th>Location</th>
-                                            <th>...</th>
-                                            <th>...</th>
-                                            <th>...</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $item)
                                         <tr>
                                             <td>...</td>
-                                            <td>{{$item->report_title}}</td>
-                                            {{-- <td>{{$item->description}}</td> --}}
-                                            <td>{{strlen($item->description) > 50 ? substr($item->description,0,50)."..." : $item->description}}</td>
-                                            <td>{{$item->file_name}}</td>
-                                            <td>{{$item->location}}</td>
-                                            <td><small><a href="{{ route('user.runReport',['id' => $item->id]) }}"> Run <i class="fe fe-chevron-right" data-toggle="tooltip" title="run"></i></a></small></td>
-                                            <td><small><a href="{{ route('user.editReport',['id' => $item->id]) }}"> Edit <i class="fe fe-edit" data-toggle="tooltip" title="edit"></i></a></small></td>
-                                            <td><small><form action="{{route('user.deleteReport')}}" method="post"> @csrf @method('DELETE') <input type="hidden" name="id" value="{{$item->id}}"> <button type="submit" style="background: none; border: none;"> Delete <i class="fe fe-trash" data-toggle="tooltip" title="delete"></i></button> </form> </small></td>
+                                            <td>{{$report->report_title}}</td>
+                                            <td>{{$report->description}}</td>
+                                            <td>{{$report->file_name}}</td>
+                                            <td>{{$report->location}}</td>
                                         </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
