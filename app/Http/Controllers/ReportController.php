@@ -129,4 +129,29 @@ class ReportController extends Controller
         $report = Reports::where('id', $id)->first();
         return view('user.runReport', compact('report'));
     }
+
+    public function generateReport(Request $request)
+    {
+        $reportScript = $request->validate([
+            'id' => 'required',
+            'file_name' => 'required|min:3',
+            'location' => 'required'
+        ]);
+
+        $my_curl = curl_init(); 
+
+        /**
+            * We should try to pass the data through the url to the script using a get method
+            * The script would return data here.
+            * If there data is what we want, we handle what we've received, then display
+            
+        */
+        curl_setopt($my_curl, CURLOPT_URL, "http://localhost/curl_test/getInfo.php"); 
+        curl_setopt($my_curl, CURLOPT_RETURNTRANSFER, 1); 
+
+        $return_str = curl_exec($my_curl); 
+
+        curl_close($my_curl);
+        echo $return_str;
+    }
 }
