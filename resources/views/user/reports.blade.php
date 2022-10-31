@@ -39,8 +39,8 @@
                                             <td>{{$item->description}}</td>
                                             <td>{{$item->file_name}}</td>
                                             <td>{{$item->location}}</td>
-                                            <td><small><a href="{{ route('user.editReport',['id' => $item->id]) }}"> Edit <i class="fe fe-edit" data-toggle="tooltip" title="fe fe-edit"></i></a></small></td>
-                                            <td><small><form action="{{route('user.deleteReport')}}" method="post"> @csrf @method('DELETE') <input type="hidden" name="id" value="{{$item->id}}"> <button type="submit" style="background: none; border: none;"> Delete <i class="fe fe-trash" data-toggle="tooltip" title="fe fe-trash"></i></button> </form> </small></td>
+                                            <td><small><a href="{{ route('user.editReport',['id' => $item->id]) }}"> Edit <i class="fe fe-edit" data-toggle="tooltip" ></i></a></small></td>
+                                            <td><small><form action="{{route('user.deleteReport')}}" method="post"> @csrf @method('DELETE') <input type="hidden" name="id" value="{{$item->id}}"> <button type="submit" style="background: none; border: none;"> Delete <i class="fe fe-trash" data-toggle="tooltip"></i></button> </form> </small></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
