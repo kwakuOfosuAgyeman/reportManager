@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Reports;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isNull;
+
 class ReportController extends Controller
 {
     //
@@ -124,19 +126,22 @@ class ReportController extends Controller
         }
     }
 
-    public function runReport($id)
+    public function generateReport()
     {
-        $report = Reports::where('id', $id)->first();
-        return view('user.runReport', compact('report'));
+        // include the file here
+        include storage_path('app\public\scripts\test1.php');
+        // when the function is called, it is run in a route
+        
+        // get the route as the url for the curl and we move
     }
 
-    public function generateReport(Request $request)
+    public function runReport($id)
     {
-        $reportScript = $request->validate([
-            'id' => 'required',
-            'file_name' => 'required|min:3',
-            'location' => 'required'
-        ]);
+        // $report = $this->generateReport();
+        $data = include storage_path('app\public\scripts\test1.php');
+        $report = Reports::where('id', $id)->first();
+
+        $st = storage_path('app\public\scripts\test1.php');
 
         $my_curl = curl_init(); 
 
@@ -144,14 +149,18 @@ class ReportController extends Controller
             * We should try to pass the data through the url to the script using a get method
             * The script would return data here.
             * If there data is what we want, we handle what we've received, then display
-            
         */
-        curl_setopt($my_curl, CURLOPT_URL, "http://localhost/curl_test/getInfo.php"); 
+        curl_setopt($my_curl, CURLOPT_URL, ''); 
+        curl_setopt ($my_curl, CURLOPT_TIMEOUT, 60); 
+        // curl_setopt($my_curl, CURLOPT_FILE, 'C:\xampp\htdocs\curl_test\getInfo.php'); 
         curl_setopt($my_curl, CURLOPT_RETURNTRANSFER, 1); 
 
         $return_str = curl_exec($my_curl); 
-
         curl_close($my_curl);
-        echo $return_str;
+
+
+        return view('user.runReport', compact('report','return_str','data'));
     }
+
+
 }

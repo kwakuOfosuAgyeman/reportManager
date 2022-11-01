@@ -32,6 +32,8 @@ Route::get('/', function() {
 });
 
 
+
+
 Route::prefix('user')->name('user.')->group(function () {
     Route::middleware(['guest:web'])->group(function() {
         Route::get('/login', [LoginController::class, 'index'])->name('loginPage');
@@ -52,6 +54,7 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::put('/editReport', [ReportController::class, 'updateReport'])->name('updateReport');
         Route::delete('/deleteReport', [ReportController::class, 'deleteReport'])->name('deleteReport');
         Route::get('/runReport/{id}', [ReportController::class, 'runReport'])->name('runReport');
+        Route::get('/generateReport', [ReportController::class, 'generateReport'])->name('generateReport');
 
     });
 });
