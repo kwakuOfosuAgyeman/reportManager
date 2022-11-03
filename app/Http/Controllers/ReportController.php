@@ -131,7 +131,7 @@ class ReportController extends Controller
         // include the file here
         include storage_path('app\public\scripts\test1.php');
         // when the function is called, it is run in a route
-        
+
         // get the route as the url for the curl and we move
     }
 
@@ -143,24 +143,21 @@ class ReportController extends Controller
 
         // $st = storage_path('app\public\scripts\test1.php');
 
-        $my_curl = curl_init(); 
+        $my_curl = curl_init();
 
         /**
             * We should try to pass the data through the url to the script using a get method
             * The script would return data here.
             * If there data is what we want, we handle what we've received, then display
         */
-        curl_setopt($my_curl, CURLOPT_URL, asset('script/test.php')); 
-        curl_setopt ($my_curl, CURLOPT_TIMEOUT, 60); 
-        // curl_setopt($my_curl, CURLOPT_FILE, 'C:\xampp\htdocs\curl_test\getInfo.php'); 
-        curl_setopt($my_curl, CURLOPT_RETURNTRANSFER, 1); 
+        curl_setopt($my_curl, CURLOPT_URL, asset('script/'.$report->name ));
+        curl_setopt ($my_curl, CURLOPT_TIMEOUT, 60);
+        // curl_setopt($my_curl, CURLOPT_FILE, 'C:\xampp\htdocs\curl_test\getInfo.php');
+        curl_setopt($my_curl, CURLOPT_RETURNTRANSFER, 1);
 
-        $return_str = curl_exec($my_curl); 
-        // $return_str = json_decode($return_str);
-        $return_str = json_decode($return_str, true);
+        $return_str = curl_exec($my_curl);
         curl_close($my_curl);
 
-        // var_dump($return_str[0][id]);
 
         return view('user.runReport', compact('report','return_str'));
     }

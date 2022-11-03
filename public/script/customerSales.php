@@ -1,6 +1,6 @@
 <?php
     // configure mysql database connection to `program1`
-    $con = mysqli_connect('localhost', 'root', '', 'program1');
+    $con = mysqli_connect('localhost', 'root', '', 'testData');
 
     // handle form submission
     if(isset($_POST['from']) && isset($_POST['to'])) {
