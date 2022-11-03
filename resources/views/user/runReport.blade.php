@@ -1,5 +1,5 @@
 <x-user-layout>
-    
+
     <div class="section-body mt-3">
         <div class="container-fluid">
             <div class="row clearfix">
@@ -14,10 +14,10 @@
                 <div class="col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header" style="justify-content: space-between">
-                            <h3 class="card-title">{{$report->report_title}}</h3>
+                            <h3 class="card-title">{{$report->report_title}}{{$return_str}}</h3>
                             <a class="card-title" href="" class="btn btn-primary">Print Report</a>
                         </div>
-                        {{-- @dd($return_str[0]) --}}
+                        {{-- @dd($return_str) --}}
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-hover table-striped text-nowrap table-vcenter mb-0">
@@ -34,7 +34,6 @@
                                             <tr>
                                                 <td>...</td>
                                                 @foreach ($item as $data)
-                                                    {{-- <td>{{$data}}</td> --}}
                                                     <td>{{strlen($data) > 50 ? substr($data,0,50)."..." : $data}}</td>
                                                 @endforeach
                                             </tr>
@@ -50,7 +49,7 @@
         </div>
 
     </div>
-    
+
 
     @section('page-script')
     <script src="{{ asset('assets/bundles/apexcharts.bundle.js') }}"></script>
