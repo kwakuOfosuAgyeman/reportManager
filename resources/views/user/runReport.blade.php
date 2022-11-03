@@ -24,27 +24,23 @@
                                     <thead>
                                         <tr>
                                             <th>...</th>
-                                            <th>Report Title</th>
-                                            <th>Description</th>
-                                            <th>File name</th>
-                                            <th>Location</th>
-                                            <th>...</th>
-                                            <th>...</th>
-                                            <th>...</th>
+                                            @foreach (array_values(array_keys($return_str[0])) as $item)
+                                            
+                                                <th>{{$item}}</th>
+                                            @endforeach
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $item)
-                                        <tr>
-                                            <td>...</td>
-                                            <td>{{$item->report_title}}</td>
-                                            <td>{{strlen($item->description) > 50 ? substr($item->description,0,50)."..." : $item->description}}</td>
-                                            <td>{{$item->file_name}}</td>
-                                            <td>{{$item->location}}</td>
-                                            <td><small><a href="{{ route('user.runReport',['id' => $item->id]) }}"> Run <i class="fe fe-chevron-right" data-toggle="tooltip" title="run"></i></a></small></td>
-                                            <td><small><a href="{{ route('user.editReport',['id' => $item->id]) }}"> Edit <i class="fe fe-edit" data-toggle="tooltip" title="fe fe-edit"></i></a></small></td>
-                                            <td><small><form action="{{route('user.deleteReport')}}" method="post"> @csrf @method('DELETE') <input type="hidden" name="id" value="{{$item->id}}"> <button type="submit" style="background: none; border: none;"> Delete <i class="fe fe-trash" data-toggle="tooltip" title="fe fe-trash"></i></button> </form> </small></td>
-                                        </tr>
+                                        @foreach ($return_str as $item)
+                                            <tr>
+                                                <td>...</td>
+
+                                                @foreach ($item as $data)
+
+                                                    <td>{{strlen($data) > 50 ? substr($data,0,50)."..." : $data}}</td>
+
+                                                @endforeach
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
