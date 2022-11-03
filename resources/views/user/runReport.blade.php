@@ -34,7 +34,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach ($data as $item)
+                                        @foreach ($data as $item)
                                         <tr>
                                             <td>...</td>
                                             <td>{{$item->report_title}}</td>
@@ -45,7 +45,7 @@
                                             <td><small><a href="{{ route('user.editReport',['id' => $item->id]) }}"> Edit <i class="fe fe-edit" data-toggle="tooltip" title="fe fe-edit"></i></a></small></td>
                                             <td><small><form action="{{route('user.deleteReport')}}" method="post"> @csrf @method('DELETE') <input type="hidden" name="id" value="{{$item->id}}"> <button type="submit" style="background: none; border: none;"> Delete <i class="fe fe-trash" data-toggle="tooltip" title="fe fe-trash"></i></button> </form> </small></td>
                                         </tr>
-                                        @endforeach --}}
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
