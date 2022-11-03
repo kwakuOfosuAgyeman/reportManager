@@ -156,8 +156,11 @@ class ReportController extends Controller
         curl_setopt($my_curl, CURLOPT_RETURNTRANSFER, 1); 
 
         $return_str = curl_exec($my_curl); 
+        // $return_str = json_decode($return_str);
+        $return_str = json_decode($return_str, true);
         curl_close($my_curl);
 
+        // var_dump($return_str[0][id]);
 
         return view('user.runReport', compact('report','return_str'));
     }
