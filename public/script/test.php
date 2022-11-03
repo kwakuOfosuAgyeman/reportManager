@@ -22,7 +22,6 @@ function something(){
           echo json_encode("File does not exist in database");
      } 
 
-     // echo json_encode("Hello Kebede");
 }
 
 something();

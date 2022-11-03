@@ -104,8 +104,6 @@ class ReportController extends Controller
                         ->with('failed','Report does not exist');
         }
 
-
-
     }
 
     public function deleteReport(Request $request)

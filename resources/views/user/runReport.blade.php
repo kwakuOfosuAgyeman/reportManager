@@ -28,10 +28,6 @@
                                                 <th>{{$item}}</th>
                                             @endforeach                                 
                                         </tr>
-
-                                        {{-- {{ array_keys($return_str[0]) }}    --}}
-
-
                                     </thead>
                                     <tbody>
                                         @foreach ($return_str as $item)
