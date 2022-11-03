@@ -138,10 +138,10 @@ class ReportController extends Controller
     public function runReport($id)
     {
         // $report = $this->generateReport();
-        $data = include storage_path('app\public\scripts\test1.php');
+        // $data = include storage_path('app\public\scripts\test1.php');
         $report = Reports::where('id', $id)->first();
 
-        $st = storage_path('app\public\scripts\test1.php');
+        // $st = storage_path('app\public\scripts\test1.php');
 
         $my_curl = curl_init(); 
 
@@ -150,7 +150,7 @@ class ReportController extends Controller
             * The script would return data here.
             * If there data is what we want, we handle what we've received, then display
         */
-        curl_setopt($my_curl, CURLOPT_URL, ''); 
+        curl_setopt($my_curl, CURLOPT_URL, asset('script/test.php')); 
         curl_setopt ($my_curl, CURLOPT_TIMEOUT, 60); 
         // curl_setopt($my_curl, CURLOPT_FILE, 'C:\xampp\htdocs\curl_test\getInfo.php'); 
         curl_setopt($my_curl, CURLOPT_RETURNTRANSFER, 1); 
@@ -159,7 +159,7 @@ class ReportController extends Controller
         curl_close($my_curl);
 
 
-        return view('user.runReport', compact('report','return_str','data'));
+        return view('user.runReport', compact('report','return_str'));
     }
 
 

@@ -14,7 +14,7 @@
                 <div class="col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header" style="justify-content: space-between">
-                            <h3 class="card-title">{{$report->report_title}}{{$data}}</h3>
+                            <h3 class="card-title">{{$report->report_title}}{{$return_str}}</h3>
                             <a class="card-title" href="" class="btn btn-primary">Print Report</a>
                         </div>
                         {{-- @dd($return_str) --}}
