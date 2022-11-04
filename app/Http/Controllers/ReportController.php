@@ -150,14 +150,17 @@ class ReportController extends Controller
             * The script would return data here.
             * If there data is what we want, we handle what we've received, then display
         */
-        curl_setopt($my_curl, CURLOPT_URL, asset('script/'.$report->name ));
+        curl_setopt($my_curl, CURLOPT_URL, asset('script/test.php'));
         curl_setopt ($my_curl, CURLOPT_TIMEOUT, 60);
         // curl_setopt($my_curl, CURLOPT_FILE, 'C:\xampp\htdocs\curl_test\getInfo.php');
         curl_setopt($my_curl, CURLOPT_RETURNTRANSFER, 1);
 
-        $return_str = curl_exec($my_curl);
+        $return_str = curl_exec($my_curl); 
+        // $return_str = json_decode($return_str);
+        $return_str = json_decode($return_str, true);
         curl_close($my_curl);
 
+        // var_dump($return_str[0]['id']);
 
         return view('user.runReport', compact('report','return_str'));
     }

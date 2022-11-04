@@ -3,7 +3,7 @@
 function something(){
      define('SERVER', 'localhost'); // server
      define('USER', 'root'); // username 
-     define('DATABASE', 'rg_work'); // db name
+     define('DATABASE', 'test'); // db name
      define('PASSWORD', ''); // password
 
      session_start();
@@ -12,7 +12,7 @@ function something(){
      // connect to the database
      $GLOBALS['db'] = mysqli_connect(SERVER, USER, PASSWORD, DATABASE); 
 
-     $query = "SELECT * FROM TYPES LIMIT 5";
+     $query = "SELECT * FROM CUSTOMER_SALES";
 
      $data = mysqli_fetch_all(mysqli_query($GLOBALS['db'], $query), MYSQLI_ASSOC); 
 
