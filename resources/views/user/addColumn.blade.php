@@ -15,9 +15,10 @@
                           <div class="card-header">
                               <h3 class="card-title">Add Column Form</h3>
                           </div>
+                          
                           <div class="card-body">
                               <div class="table-responsive">
-                                   <form action="{{route('user.addNewCC')}}" id="basic-form" method="post" novalidate>
+                                    <form action="{{route('user.addNewCC')}}" id="basic-form" method="post" novalidate>
                                         @csrf
                                         <div style="display: none">
                                             <label>Column Id</label>
@@ -42,8 +43,14 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Type</label>
-                                            <input type="text" name="type" class="form-control" required>
+                                            <label class="form-label">Type</label>
+                                            <select class="form-control custom-select" name="type">
+                                                <option value="character">Character</option>
+                                                <option value="combobox list">Combobox List</option>
+                                                <option value="numeric">Numeric</option>
+                                                <option value="date">Date</option>
+                                                <option value="computed column">Computed Column</option>
+                                            </select>
                                         </div>
 
                                         <div class="form-group">
@@ -55,16 +62,34 @@
                                             <input type="text" name="decimal_size" class="form-control" required>
                                         </div>
 
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label>Manual Editing</label>
+
                                             <input type="text" name="manual_editing" class="form-control" required>
-                                        </div>
+                                        </div> --}}
+
                                         <div class="form-group">
+                                            <label class="form-label">Manual Editing</label>
+                                            <select class="form-control custom-select" name="manual_editing">
+                                                <option value="0">No</option>
+                                                <option value="1">Yes</option>   
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Mass Editing</label>
+                                            <select class="form-control custom-select" name="mass_update">
+                                                <option value="0">No</option>
+                                                <option value="1">Yes</option>
+                                            </select>
+                                        </div>
+
+                                        {{-- <div class="form-group">
                                             <label>Mass Update</label>
                                             <input type="text" name="mass_update" class="form-control" required>
-                                        </div>
+                                        </div> --}}
                                        
-                                        <br>
+                                        </br>   
                                         <button type="submit" class="btn btn-primary">Add</button>
                                     </form>
                               </div>
