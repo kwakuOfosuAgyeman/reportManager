@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomReportController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ReportController;
 
@@ -54,7 +55,14 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::put('/editReport', [ReportController::class, 'updateReport'])->name('updateReport');
         Route::delete('/deleteReport', [ReportController::class, 'deleteReport'])->name('deleteReport');
         Route::get('/runReport/{id}', [ReportController::class, 'runReport'])->name('runReport');
-        Route::get('/generateReport', [ReportController::class, 'generateReport'])->name('generateReport');
+
+        // Route::get('/columnMaintenance/{id}', [ReportController::class, 'columnMaintenance'])->name('columnMaintenance');
+        Route::get('/addColumn', [ReportController::class, 'addColumn'])->name('addColumn');
+        
+        
+        Route::get('/columnMaintenance/{id}', [CustomReportController::class, 'columnMaintenance'])->name('columnMaintenance');
+        Route::get('/addCustomColumn/{id}', [CustomReportController::class, 'addCustomColumn'])->name('addCustomColumn');
+        Route::post('/addCustomColumn', [CustomReportController::class, 'store'])->name('addNewCC');
 
     });
 });
