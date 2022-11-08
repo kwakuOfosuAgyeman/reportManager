@@ -92,7 +92,7 @@
                                                        <td>{{$col['manual_editing'] === 1 ? "Yes" : "No"}}</td>
                                                        <td>{{$col['mass_update'] === 1 ? "Yes" : "No"}}</td>
                                                        <td><small><a href="{{ route('user.editColumn',['id' => $col['id']]) }}"> Edit <i class="fe fe-edit" data-toggle="tooltip" title="fe fe-edit"></i></a></small></td>
-                                                       <td><small><form action="" method="post"> @csrf @method('DELETE') <input type="hidden" name="id" value=""> <button type="submit" style="background: none; border: none;"> Delete <i class="fe fe-trash" data-toggle="tooltip" title="fe fe-trash"></i></button> </form> </small></td>
+                                                       <td><small><form action="{{route('user.deleteColumn')}}" method="post"> @csrf @method('DELETE') <input type="hidden" name="id" value="{{$col['id']}}"> <button type="submit" style="background: none; border: none;"> Delete <i class="fe fe-trash" data-toggle="tooltip" title="fe fe-trash"></i></button> </form> </small></td>
                                                   </tr> 
                                                       
                                                   @endforeach

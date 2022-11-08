@@ -91,8 +91,24 @@ class CustomReportController extends Controller
                         ->with('failed','Report does not exist');
         }
 
+    }
+
+    public function deleteColumn(Request $request)
+    {
+        //dd($request->input('id'));
+        $data = $request->validate([
+            'id' => 'required'
+        ]);
 
 
+        if(CustomReports::destroy($data['id'])){
+            return back();
+        }else{
+            return back()->withErrors([
+                'success' => false,
+                'error_message' => 'Record not deleted'
+            ]);
+        }
     }
 
 

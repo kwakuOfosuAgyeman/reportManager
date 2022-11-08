@@ -77,6 +77,9 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('/editColumn/{id}', [CustomReportController::class, 'edit'])->name('editColumn');
         Route::put('/updateColumn', [CustomReportController::class, 'updateColumn'])->name('updateColumn');
 
+        // delete column
+        Route::delete('/deleteColumn', [CustomReportController::class, 'deleteColumn'])->name('deleteColumn');
+
 
     });
 });
