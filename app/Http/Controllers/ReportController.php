@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomReports;
 use App\Models\Reports;
 use Illuminate\Http\Request;
 
@@ -130,7 +131,7 @@ class ReportController extends Controller
         include storage_path('app\public\scripts\test1.php');
         // when the function is called, it is run in a route
 
-        // get the route as the url for the curl and we move
+        return $return_str;
     }
 
     public function runReport($id)
@@ -148,19 +149,33 @@ class ReportController extends Controller
             * The script would return data here.
             * If there data is what we want, we handle what we've received, then display
         */
-        curl_setopt($my_curl, CURLOPT_URL, asset('script/test.php'));
+        curl_setopt($my_curl, CURLOPT_URL, asset('script/'.$report->name ));
         curl_setopt ($my_curl, CURLOPT_TIMEOUT, 60);
         // curl_setopt($my_curl, CURLOPT_FILE, 'C:\xampp\htdocs\curl_test\getInfo.php');
         curl_setopt($my_curl, CURLOPT_RETURNTRANSFER, 1);
 
-        $return_str = curl_exec($my_curl); 
+        $return_str = curl_exec($my_curl);
         // $return_str = json_decode($return_str);
         $return_str = json_decode($return_str, true);
         curl_close($my_curl);
 
+        $customColumns = CustomReports::where('report_id', $id)->get();
+
+
+        return view('user.runReport', compact('report','return_str','customColumns'));
+    }
+
+    public function columnMaintenance($id)
+    {
+        $report = Reports::where('id', $id)->first();
+        $data = $this->generateReport();
+        return view('user.columnMaintenance', compact('report', 'data'));
+    }
         // var_dump($return_str[0][id]);
 
-        return view('user.runReport', compact('report','return_str'));
+    public function addColumn()
+    {
+        return view('user.addColumn');
     }
 
 

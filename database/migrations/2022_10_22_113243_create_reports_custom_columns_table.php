@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('size');
             $table->integer('decimal_size');
             $table->string('formula');
+            $table->binary('manual_editing');
+            $table->binary('mass_update');
             $table->timestamps();
         });
     }

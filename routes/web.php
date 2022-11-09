@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomReportController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ReportController;
 
@@ -48,13 +49,37 @@ Route::prefix('user')->name('user.')->group(function () {
         
         // ReportController routes
         Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+        
+        // add report
         Route::get('/addReport', [ReportController::class, 'create'])->name('addReport');
         Route::post('/addReport', [ReportController::class, 'store']);
+        
+        // edit report
         Route::get('/editReport/{id}', [ReportController::class, 'edit'])->name('editReport');
         Route::put('/editReport', [ReportController::class, 'updateReport'])->name('updateReport');
+        
+        // delete report
         Route::delete('/deleteReport', [ReportController::class, 'deleteReport'])->name('deleteReport');
+        
+        // run report
         Route::get('/runReport/{id}', [ReportController::class, 'runReport'])->name('runReport');
-        Route::get('/generateReport', [ReportController::class, 'generateReport'])->name('generateReport');
+
+        
+        // column management
+        Route::get('/columnMaintenance/{id}', [CustomReportController::class, 'columnMaintenance'])->name('columnMaintenance');
+
+        // add column
+        Route::get('/addColumn', [ReportController::class, 'addColumn'])->name('addColumn');
+        Route::get('/addCustomColumn/{id}', [CustomReportController::class, 'addCustomColumn'])->name('addCustomColumn');
+        Route::post('/addCustomColumn', [CustomReportController::class, 'store'])->name('addNewCC');
+
+        // edit column
+        Route::get('/editColumn/{id}', [CustomReportController::class, 'edit'])->name('editColumn');
+        Route::put('/updateColumn', [CustomReportController::class, 'updateColumn'])->name('updateColumn');
+
+        // delete column
+        Route::delete('/deleteColumn', [CustomReportController::class, 'deleteColumn'])->name('deleteColumn');
+
 
     });
 });

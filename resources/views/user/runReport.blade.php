@@ -14,9 +14,14 @@
                 <div class="col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header" style="justify-content: space-between">
-                            <h3 class="card-title">{{$report->report_title}}{{$return_str}}</h3>
-                            <a class="card-title" href="" class="btn btn-primary">Print Report</a>
+                            <h3 class="card-title" data-bs-toggle="tooltip" title="{{$report->description}}">{{$report->report_title}}</h3>
+                            <div class="card-options">
+                                <button class="btn btn-primary">Print Report</button>
+                                {{-- <button class="btn btn-dark ml-2"> Menu options</button> --}}
+                                <a href="{{route('user.columnMaintenance', ['id' => $report->id]) }}"><button class="btn btn-dark"> Menu options</button></a>
+                            </div>
                         </div>
+
                         {{-- @dd($return_str) --}}
                         <div class="card-body">
                             <div class="table-responsive">
@@ -24,28 +29,72 @@
                                     <thead>
                                         <tr>
                                             <th>...</th>
-                                            @foreach (array_values(array_keys($return_str[0])) as $item)
-                                            
-                                                <th>{{$item}}</th>
-                                            @endforeach
+                                            <th>Report Title</th>
+                                            <th>Description</th>
+                                            <th>File name</th>
+                                            <th>Location</th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                            <th>...</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+
+                                        @php
+                                            $calc = 0;
+                                            $column = 0;
+                                            $calc_array = array_fill(0,$column_count, 0);
+                                        @endphp
+
                                         @foreach ($return_str as $item)
                                             <tr>
                                                 <td>...</td>
-
                                                 @foreach ($item as $data)
 
                                                     <td>{{strlen($data) > 50 ? substr($data,0,50)."..." : $data}}</td>
-
+                                                    @php
+                                                        if (is_numeric($data)) {
+                                                            $calc_array[$column] = $calc_array[$column] + $data;
+                                                        }else{
+                                                            $calc_array[$column] = 0;
+                                                        }
+                                                        $column = $column + 1;
+                                                    @endphp
                                                 @endforeach
+                                                @for ($i = 0; $i < $cust_col_count; $i++)
+                                                    <td>...</td>
+                                                @endfor
                                             </tr>
+                                            @php
+                                                $column = 0;
+                                            @endphp
                                         @endforeach
+
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Subtotal</td>
+                                            @foreach ($calc_array as $num)
+                                                @if ($num <= 0)
+                                                <td></td>
+                                                @endif
+                                                @if ($num > 0)
+                                                <td>{{$num}}</td>
+                                                @endif
+                                            @endforeach
+
+                                            @for ($i = 0; $i < $cust_col_count; $i++)
+                                                <td></td>
+                                            @endfor
+                                        </tr>
+
+                                              
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
