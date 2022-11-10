@@ -25,7 +25,7 @@
                                         $rep = $report_col->getOriginal(); // report column data
                                         $report = $report->getOriginal();
                                     @endphp
-                                    
+
                                     {{-- @dd($rep['manual_editing']) --}}
                                     <div style="display: none">
                                         <label>Column Id</label>
@@ -46,7 +46,7 @@
                                         <label>Column name</label>
                                         <input type="text" name="custom_column" class="form-control" value="{{$rep['custom_column']}}" required>
                                     </div>
-                                
+
                                     <div class="form-group">
                                         <label>Description</label>
                                         <textarea class="form-control" name="description" rows="5" cols="30" required>{{$rep['description']}}</textarea>
@@ -54,13 +54,27 @@
 
                                     <div class="form-group">
                                         <label>Type</label>
-                                        <select class="form-control custom-select" name="type" value="{{$rep['type']}}">
+                                        <select class="form-control custom-select" id="type" name="type" value="{{$rep['type']}}">
                                             <option value="character">Character</option>
                                             <option value="combobox list">Combobox List</option>
                                             <option value="numeric">Numeric</option>
                                             <option value="date">Date</option>
                                             <option value="computed column">Computed Column</option>
                                         </select>
+                                    </div>
+                                    <div id="combobox-values">
+                                        <div class="form-group">
+                                            <label for="">Column Name</label>
+                                            <input type="text" name="value_code" id="" value="{{$rep['custom_column']}}" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Value Code</label>
+                                            <input type="text" name="value_code" id="input-tags">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Value Description</label>
+                                            <input type="text" name="description">
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
@@ -75,7 +89,7 @@
                                     <div class="form-group">
                                         <label>Manual Editing</label>
                                         <select class="form-control custom-select" name="manual_editing" value="{{$rep['manual_editing']}}">
-                                            
+
                                             @if ($rep['manual_editing'] == 1)
                                                 <option value="{{$rep['manual_editing']}}" selected>Yes</option>
                                                 <option value="0">No</option>
@@ -99,7 +113,7 @@
                                         </select>
                                     </div>
 
-                                    </br>   
+                                    <br>
                                     <button type="submit" class="btn btn-primary">Edit</button>
                                 </form>
                             </div>
@@ -119,5 +133,21 @@
 
     <script src="{{ asset('assets/js/core.js') }}"></script>
     <script src="{{ asset('assets/js/page/index.js') }}"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#combobox-values').hide();
+            $('#type').change(function () {
+                if($(this).val() === "combobox list"){
+                    $('combobox-values').show();
+                }
+                if($(this).val() !== "combobox list"){
+                    $('combobox-values').hide();
+                }
+            });
+        });
+    </script>
     @stop
+
+
 </x-user-layout>

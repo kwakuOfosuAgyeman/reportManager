@@ -1,5 +1,4 @@
 <x-user-layout>
-
     <div class="section-body mt-3">
         <div class="container-fluid">
             <div class="row clearfix">
@@ -21,7 +20,6 @@
                                 <a href="{{route('user.columnMaintenance', ['id' => $report->id]) }}"><button class="btn btn-dark"> Menu options</button></a>
                             </div>
                         </div>
-
                         {{-- @dd($return_str) --}}
                         <div class="card-body">
                             <div class="table-responsive">
@@ -29,28 +27,39 @@
                                     <thead>
                                         <tr>
                                             <th>...</th>
-                                            <th>Report Title</th>
-                                            <th>Description</th>
-                                            <th>File name</th>
-                                            <th>Location</th>
-                                            <th>...</th>
-                                            <th>...</th>
-                                            <th>...</th>
+                                            @php
+                                                $column_count = 0;
+                                                $cust_col_count = 0
+                                            @endphp
+                                            @foreach (array_values(array_keys($return_str[0])) as $item)
+                                                <th>{{$item}}</th>
+                                                @php
+                                                    $column_count ++;
+                                                @endphp
+                                            @endforeach
+                                            @if ($customColumns)
+                                                @foreach ($customColumns as $cols)
+                                                    @php
+                                                        $cols = $cols->getOriginal();
+                                                    @endphp
+                                                    <th>{{$cols['custom_column']}}</th>
+                                                    @php
+                                                        $cust_col_count ++;
+                                                    @endphp
+                                                @endforeach
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         @php
                                             $calc = 0;
                                             $column = 0;
                                             $calc_array = array_fill(0,$column_count, 0);
                                         @endphp
-
                                         @foreach ($return_str as $item)
                                             <tr>
                                                 <td>...</td>
                                                 @foreach ($item as $data)
-
                                                     <td>{{strlen($data) > 50 ? substr($data,0,50)."..." : $data}}</td>
                                                     @php
                                                         if (is_numeric($data)) {
@@ -69,7 +78,6 @@
                                                 $column = 0;
                                             @endphp
                                         @endforeach
-
                                         <tr>
                                             <td></td>
                                         </tr>
@@ -83,34 +91,24 @@
                                                 <td>{{$num}}</td>
                                                 @endif
                                             @endforeach
-
                                             @for ($i = 0; $i < $cust_col_count; $i++)
                                                 <td></td>
                                             @endfor
                                         </tr>
-
-                                              
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
-
-
     @section('page-script')
     <script src="{{ asset('assets/bundles/apexcharts.bundle.js') }}"></script>
     <script src="{{ asset('assets/bundles/counterup.bundle.js') }}"></script>
     <script src="{{ asset('assets/bundles/knobjs.bundle.js') }}"></script>
-
     <script src="{{ asset('assets/js/core.js') }}"></script>
     <script src="{{ asset('assets/js/page/index.js') }}"></script>
     @stop
-
 </x-user-layout>

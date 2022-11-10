@@ -37,6 +37,7 @@ return array(
     'App\\Models\\Admin' => $baseDir . '/app/Models/Admin.php',
     'App\\Models\\CustomReports' => $baseDir . '/app/Models/CustomReports.php',
     'App\\Models\\Customer' => $baseDir . '/app/Models/Customer.php',
+    'App\\Models\\Reports' => $baseDir . '/app/Models/Reports.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CustomReports;
 use App\Models\Reports;
+use App\Models\Combobox;
 use Illuminate\Http\Request;
 
 class CustomReportController extends Controller
@@ -13,7 +14,7 @@ class CustomReportController extends Controller
     {
         $report = Reports::where('id', $id)->first();
         $customColumns = CustomReports::where('report_id', $id)->get();
-        
+
         return view('user.columnMaintenance', compact('report','customColumns'));
     }
 
@@ -37,7 +38,18 @@ class CustomReportController extends Controller
             'manual_editing' => 'required',
             'mass_update' => 'required',
         ]);
-       
+
+        if($request->type === 'combobox list'){
+            //dd($request->all());
+            $request->validate([
+                'value_description' => 'required',
+                'value_code'  => 'required',
+            ]);
+        }
+        $invalid = CustomReports::where('report_id', $request->report_id)->where('custom_column', $request->custom_column)->first();
+        if(isset($invalid) && $invalid !== null){
+            return back()->withErrors('error', 'Report name already exists');
+        }
 
         $create_cc = CustomReports::create([
             'report_id' => $request->report_id,
@@ -49,11 +61,26 @@ class CustomReportController extends Controller
             'manual_editing' => $request->manual_editing,
             'mass_update' => $request->mass_update,
         ]);
+        if($request->type === 'combobox list'){
+            $cc = CustomReports::where('report_id', $request->report_id)
+                                ->where('custom_culomn', $request->custom_column)
+                                ->first();
+            $combo = Combobox::create([
+                'custom_column_id' => $cc->custom_culomn,
+                'value_code'       => $cc->value_code,
+                'value_description'=> $cc->value_description
+            ]);
+            if(!$combo){
+                return back()->withErrors('error', 'Unable to process this request. Please try again shortly');
+            }
+        }
 
         if($create_cc){
-            return redirect()->route('user.columnMaintenance', ['id' => $request->id])
+            return redirect()->route('user.columnMaintenance', $request->report_id)
                         ->with("Success", "Report created successfully");
         }
+        return back()->withErrors('error', 'Unable to process this request. Please try again shortly');
+
 
     }
 
@@ -84,10 +111,10 @@ class CustomReportController extends Controller
 
         if(isset($column)){
             CustomReports::where('id', $request->id)->update($updateData);
-            return redirect()->route('user.columnMaintenance', ['id' => $request->id])
+            return redirect()->route('user.columnMaintenance', ['id' => $request->report_id])
                         ->with('success','Report updated successfully');
         }else{
-            return redirect()->route('user.columnMaintenance', ['id' => $request->id])
+            return redirect()->route('user.columnMaintenance', ['id' => $request->report_id])
                         ->with('failed','Report does not exist');
         }
 
@@ -112,5 +139,5 @@ class CustomReportController extends Controller
     }
 
 
-    
+
 }
