@@ -16,7 +16,7 @@ class CustomReports extends Model
      */
 
     protected $table = 'reports_custom_columns';
-    
+
     protected $fillable = [
         'report_id',
         'custom_column',

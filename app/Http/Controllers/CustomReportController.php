@@ -48,7 +48,7 @@ class CustomReportController extends Controller
         }
         $invalid = CustomReports::where('report_id', $request->report_id)->where('custom_column', $request->custom_column)->first();
         if(isset($invalid) && $invalid !== null){
-            return back()->withErrors('error', 'Report name already exists');
+            return back()->with('error', 'Report name already exists');
         }
 
         $create_cc = CustomReports::create([
@@ -61,17 +61,23 @@ class CustomReportController extends Controller
             'manual_editing' => $request->manual_editing,
             'mass_update' => $request->mass_update,
         ]);
+
+
+        //dd($request->type);
         if($request->type === 'combobox list'){
+
             $cc = CustomReports::where('report_id', $request->report_id)
-                                ->where('custom_culomn', $request->custom_column)
+                                ->where('custom_column', $request->custom_column)
                                 ->first();
+            $value_code = "[".$request->value_code. "]";
+            //dd($value_code);
             $combo = Combobox::create([
-                'custom_column_id' => $cc->custom_culomn,
-                'value_code'       => $cc->value_code,
-                'value_description'=> $cc->value_description
+                'custom_column_id' => $cc->custom_column,
+                'value_code'       => $value_code,
+                'value_description'=> $request->value_description
             ]);
             if(!$combo){
-                return back()->withErrors('error', 'Unable to process this request. Please try again shortly');
+                return back()->with('error', 'Unable to process this request. Please try again shortly');
             }
         }
 
@@ -107,10 +113,40 @@ class CustomReportController extends Controller
             'mass_update' => 'required',
         ]);
 
+        if($request->type === 'combobox list'){
+            //dd($request->all());
+            $request->validate([
+                'value_description' => 'required',
+                'value_code'  => 'required',
+            ]);
+        }
+        $invalid = CustomReports::where('report_id', $request->report_id)->where('custom_column', $request->custom_column)->first();
+        if(isset($invalid) && $invalid !== null){
+            return back()->with('error', 'Report name already exists');
+        }
+
+
+
         $column = CustomReports::where('id', $request->id)->first();
 
         if(isset($column)){
             CustomReports::where('id', $request->id)->update($updateData);
+            if($request->type === 'combobox list'){
+
+                $cc = CustomReports::where('report_id', $request->report_id)
+                                    ->where('custom_column', $request->custom_column)
+                                    ->first();
+                $value_code = "[".$request->value_code. "]";
+                //dd($value_code);
+                $combo = Combobox::create([
+                    'custom_column_id' => $cc->custom_column,
+                    'value_code'       => $value_code,
+                    'value_description'=> $request->value_description
+                ]);
+                if(!$combo){
+                    return back()->with('error', 'Unable to process this request. Please try again shortly');
+                }
+            }
             return redirect()->route('user.columnMaintenance', ['id' => $request->report_id])
                         ->with('success','Report updated successfully');
         }else{

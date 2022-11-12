@@ -28,32 +28,32 @@
 
                                     {{-- @dd($rep['manual_editing']) --}}
                                     <div style="display: none">
-                                        <label>Column Id</label>
+                                        <label class="form-label">Column Id</label>
                                         <input type="text" name="id" class="form-control" value="{{$rep['id']}}" readonly>
                                     </div>
 
                                     <div style="display: none">
-                                        <label>Report name</label>
+                                        <label class="form-label">Report name</label>
                                         <input type="text" name="report_id" class="form-control disabled" value="{{$rep['report_id']}}" readonly>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Report name</label>
+                                        <label class="form-label">Report name</label>
                                         <input type="text" name="report_name" class="form-control disabled" value="{{$report['report_title']}}" disabled>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Column name</label>
+                                        <label class="form-label">Column name</label>
                                         <input type="text" name="custom_column" class="form-control" value="{{$rep['custom_column']}}" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Description</label>
+                                        <label class="form-label">Description</label>
                                         <textarea class="form-control" name="description" rows="5" cols="30" required>{{$rep['description']}}</textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Type</label>
+                                        <label class="form-label">Type</label>
                                         <select class="form-control custom-select" id="type" name="type" value="{{$rep['type']}}">
                                             <option value="character">Character</option>
                                             <option value="combobox list">Combobox List</option>
@@ -64,30 +64,38 @@
                                     </div>
                                     <div id="combobox-values">
                                         <div class="form-group">
-                                            <label for="">Column Name</label>
+                                            <label for="" class="form-label">Column Name</label>
                                             <input type="text" name="value_code" id="" value="{{$rep['custom_column']}}" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Value Code</label>
-                                            <input type="text" name="value_code" id="input-tags">
+                                            <label for="" class="form-label">Value Code</label>
+                                            <input type="text" name="value_code" id="input-tags" @if ($rep['type'] === "combobox-list") value="{{$rep['value_code']}}" @endif>
                                         </div>
+                                        @error('value_code')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                         <div class="form-group">
-                                            <label for="">Value Description</label>
-                                            <input type="text" name="description">
+                                            <label for="" class="form-label">Value Description</label>
+                                            <input type="text" name="value_description" @if ($rep['type'] === "combobox-list") value="{{$rep['value_description']}}" @endif>
                                         </div>
+                                        @error('value_description')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
+
+
                                     <div class="form-group">
-                                        <label>Size</label>
+                                        <label class="form-label">Size</label>
                                         <input type="text" name="size" class="form-control" value="{{$rep['size']}}" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Decimal Size</label>
+                                        <label class="form-label">Decimal Size</label>
                                         <input type="text" name="decimal_size" class="form-control" value="{{$rep['decimal_size']}}" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Manual Editing</label>
+                                        <label class="form-label">Manual Editing</label>
                                         <select class="form-control custom-select" name="manual_editing" value="{{$rep['manual_editing']}}">
 
                                             @if ($rep['manual_editing'] == 1)
@@ -101,7 +109,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Mass Update</label>
+                                        <label class="form-label">Mass Update</label>
                                         <select class="form-control custom-select" name="mass_update" value="{{$rep['mass_update']}}">
                                             @if ($rep['mass_update'] == 1)
                                                 <option value="{{$rep['mass_update']}}" selected>Yes</option>
@@ -137,6 +145,10 @@
 
         $(document).ready(function () {
             $('#combobox-values').hide();
+            if($('#type').val() === "combobox list")
+                $('#combobox-values').show();
+
+
             $('#type').change(function () {
                 if($(this).val() === "combobox list"){
                     $('combobox-values').show();
